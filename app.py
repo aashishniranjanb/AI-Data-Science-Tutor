@@ -1,85 +1,86 @@
 import streamlit as st
 import os
 
-from utils.session_manager import initialize_session_state
-from utils.llm_utils import get_llm
-from utils.data_classes import Message
-from components.sidebar import create_sidebar
-from components.chat_interface import display_chat_messages, handle_chat_input
+# ✅ Set up Google API Key (Replace with actual key)
+os.environ["GOOGLE_API_KEY"] = "AIzaSyBVOM4Pct30jaUcFUiXpbMy4hVOv2f3kKk"
 
-# 1. Configure the page (Title + Icon)
+# ✅ Set page title and icon (Ensure the image is in the same folder)
 st.set_page_config(
     page_title="AI Data Science Tutor",
-    page_icon="static/images/ds_tutor_icon.png",  # Update with your actual image path
+    page_icon="ai_tutor_icon.png",  # Image must be in the same directory
     layout="wide"
 )
 
-# 2. Hardcode your Google API key in code (⚠️ Not recommended for production)
-os.environ["GOOGLE_API_KEY"] = "YOUR_KEY"  # <-- Replace with your actual API key
+# ✅ Initialize session state for messages
+if "messages" not in st.session_state:
+    st.session_state["messages"] = []
 
-# 3. Initialize session state
-initialize_session_state()
+# ✅ Sidebar Navigation
+st.sidebar.image("ds_tutor_icon.png", width=100)
+st.sidebar.title("🔍 Navigation")
+page_choice = st.sidebar.radio(
+    "Select a page:", ["Chat", "Learning Path", "Quizzes", "Settings"]
+)
 
-# 4. Create sidebar and get the page choice
-page_choice = create_sidebar()
+# ✅ Dark Mode Toggle
+dark_mode = st.sidebar.checkbox("🌙 Enable Dark Mode", value=False)
 
-# 5. Apply Dark Mode (If enabled)
-if st.session_state.get("dark_mode", False):  # Ensure dark_mode exists
-    dark_style = """
+if dark_mode:
+    dark_css = """
     <style>
-        body, .stApp {
-            background-color: #1e1e1e !important;
-            color: #f5f5f5 !important;
-        }
-        .stTextInput, .stButton, .stMarkdown, .stRadio {
-            color: #f5f5f5 !important;
-        }
-        .css-1d391kg, .css-1cpxqw2 {
-            background-color: #1e1e1e !important;
-            color: #f5f5f5 !important;
-        }
-        .stSidebar {
-            background-color: #2c2c2c !important;
-        }
+        body, .stApp { background-color: #1e1e1e !important; color: #f5f5f5 !important; }
+        .stTextInput, .stButton, .stMarkdown, .stRadio { color: #f5f5f5 !important; }
+        .stSidebar { background-color: #2c2c2c !important; }
     </style>
     """
-    st.markdown(dark_style, unsafe_allow_html=True)
+    st.markdown(dark_css, unsafe_allow_html=True)
 
-# 6. Main page content based on navigation
-if page_choice == "Chat":
+# ✅ Chat Functionality
+def display_chat():
     st.title("🤖 AI Data Science Tutor Chat")
-    # Display the chat
-    display_chat_messages(st.session_state["messages"])
-    # Handle new user input
-    handle_chat_input(st.session_state["messages"], get_llm)
+    for msg in st.session_state["messages"]:
+        st.chat_message(msg["role"]).write(msg["content"])
 
-elif page_choice == "Learning Path":
+    # ✅ User Input
+    user_input = st.chat_input("Ask a question...")
+    if user_input:
+        st.session_state["messages"].append({"role": "user", "content": user_input})
+        st.chat_message("user").write(user_input)
+
+        # ✅ Simulate AI Response
+        ai_response = f"🔹 AI Tutor: Here’s an answer to '{user_input}'!"
+        st.session_state["messages"].append({"role": "ai", "content": ai_response})
+        st.chat_message("ai").write(ai_response)
+
+# ✅ Learning Path Section
+def display_learning_path():
     st.title("📚 Personalized Learning Path")
-    st.markdown("""
-    **Explore recommended topics** based on your current skill level.
-    We'll track your progress and suggest new modules to enhance your skills.
-    """)
-    st.info("Feature under development. Stay tuned! 🚀")
+    st.markdown("Explore topics based on your skill level. We'll track your progress!")
+    st.info("🚀 Feature under development.")
 
-elif page_choice == "Quizzes":
+# ✅ Quizzes Section
+def display_quizzes():
     st.title("📝 Quizzes & Challenges")
-    st.markdown("""
-    **Test your Data Science knowledge** with interactive quizzes.
-    Compete with peers and climb the leaderboard!
-    """)
-    st.warning("This section is coming soon! 🎉")
+    st.markdown("Test your knowledge with interactive quizzes!")
+    st.warning("🎉 Coming Soon!")
 
-elif page_choice == "Settings":
+# ✅ Settings Section
+def display_settings():
     st.title("⚙️ Settings & Preferences")
-    st.markdown("""
-    Customize your AI Tutor experience:
-    - Change themes
-    - Update your username
-    - Connect to external resources
-    """)
+    st.markdown("Customize your experience.")
     st.success("All changes are saved automatically.")
 
-# 7. Footer Section
+# ✅ Page Navigation
+if page_choice == "Chat":
+    display_chat()
+elif page_choice == "Learning Path":
+    display_learning_path()
+elif page_choice == "Quizzes":
+    display_quizzes()
+elif page_choice == "Settings":
+    display_settings()
+
+# ✅ Footer Section
 st.markdown("---")
 st.markdown("**Developed by [Aashish Niranjan BarathyKannan](https://www.linkedin.com/in/aashishniranjanb/)** | [GitHub](https://github.com/aashishniranjanb)")
 
