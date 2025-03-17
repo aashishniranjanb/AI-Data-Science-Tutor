@@ -1,4 +1,6 @@
 import streamlit as st
+import os
+
 from utils.session_manager import initialize_session_state
 from utils.llm_utils import get_llm
 from utils.data_classes import Message
@@ -8,39 +10,42 @@ from components.chat_interface import display_chat_messages, handle_chat_input
 # 1. Configure the page (Title + Icon)
 st.set_page_config(
     page_title="AI Data Science Tutor",
-    page_icon="static/images/ai_tutor_icon",  # Make sure your image is in this path
+    page_icon="static/images/ds_tutor_icon.png",  # Update with your actual image path
     layout="wide"
 )
 
-# 2. Initialize session state
+# 2. Hardcode your Google API key in code (⚠️ Not recommended for production)
+os.environ["GOOGLE_API_KEY"] = "YOUR_KEY"  # <-- Replace with your actual API key
+
+# 3. Initialize session state
 initialize_session_state()
 
-# 3. Create sidebar and get the page choice
+# 4. Create sidebar and get the page choice
 page_choice = create_sidebar()
 
-# 4. Apply Dark Mode 
-if st.session_state["dark_mode"]:
-    # Minimal example of dark mode styling
-    dark_style =
+# 5. Apply Dark Mode (If enabled)
+if st.session_state.get("dark_mode", False):  # Ensure dark_mode exists
+    dark_style = """
     <style>
-    body {
-        background-color: #1e1e1e !important;
-        color: #f5f5f5 !important;
-    }
-    .css-1cpxqw2 {
-        background-color: #1e1e1e !important;
-    }
-    .stTextInput, .stButton, .stMarkdown, .stRadio {
-        color: #f5f5f5 !important;
-    }
-    .stSidebar {
-        background-color: #2c2c2c !important;
-    }
+        body, .stApp {
+            background-color: #1e1e1e !important;
+            color: #f5f5f5 !important;
+        }
+        .stTextInput, .stButton, .stMarkdown, .stRadio {
+            color: #f5f5f5 !important;
+        }
+        .css-1d391kg, .css-1cpxqw2 {
+            background-color: #1e1e1e !important;
+            color: #f5f5f5 !important;
+        }
+        .stSidebar {
+            background-color: #2c2c2c !important;
+        }
     </style>
-    
+    """
     st.markdown(dark_style, unsafe_allow_html=True)
 
-# 5. Main page content based on navigation
+# 6. Main page content based on navigation
 if page_choice == "Chat":
     st.title("🤖 AI Data Science Tutor Chat")
     # Display the chat
@@ -74,7 +79,7 @@ elif page_choice == "Settings":
     """)
     st.success("All changes are saved automatically.")
 
-# 6. Footer Section
+# 7. Footer Section
 st.markdown("---")
 st.markdown("**Developed by [Aashish Niranjan BarathyKannan](https://www.linkedin.com/in/aashishniranjanb/)** | [GitHub](https://github.com/aashishniranjanb)")
 
