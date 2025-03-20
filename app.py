@@ -7,20 +7,18 @@ import google.generativeai as genai
 # Set your Google API key directly in the code
 GOOGLE_API_KEY = "AIzaSyBVOM4Pct30jaUcFUiXpbMy4hVOv2f3kKk"
 
-# Configure the Google Generative AI with the API key
-genai.configure(api_key=GOOGLE_API_KEY)
+# Set page title and logo - This must be the first Streamlit command
+st.set_page_config(
+    page_title="Data Science Tutor",
+    page_icon="static/ai_tutor_icon.png"  # Ensure this path is correct
+)
 
-# Style.css
+# Include the CSS file
 st.markdown(
     '<link href="static/style.css" rel="stylesheet">',
     unsafe_allow_html=True
 )
 
-# Set page title and logo
-st.set_page_config(
-    page_title="Data Science Tutor",
-    page_icon="static/ai_tutor_icon.png" 
-)
 # Initialize session state and LLM chain
 initialize_session_state()
 
