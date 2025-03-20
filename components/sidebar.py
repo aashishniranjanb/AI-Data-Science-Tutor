@@ -1,7 +1,8 @@
 import streamlit as st
 
 def create_sidebar():
-    st.sidebar.image("static/ai_tutor_icon.png", use_column_width=True)
+    st.sidebar.image("static/ai_tutor_icon.png", use_container_width=True) 
+    
     st.sidebar.title("Settings")
     st.sidebar.markdown("### Links")
     st.sidebar.markdown("[GitHub](https://github.com/aashishniranjanb)")
