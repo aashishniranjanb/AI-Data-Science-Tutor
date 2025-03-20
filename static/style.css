@@ -1,43 +1,51 @@
 body {
-    background-color: #f5f0e1; 
-    font-family: 'Roboto', sans-serif;
+    background-color: #f0f4f8; /* Light background color */
+    font-family: 'Arial', sans-serif;
+    color: #333; /* Dark text for contrast */
 }
 
 h1 {
-    color: #333; 
+    color: #4a90e2; /* Monochromatic blue for headers */
     font-weight: bold;
+    text-align: center;
 }
 
 .sidebar .sidebar-content {
-    background-color: #ffffff; 
+    background-color: #ffffff; /* White background for sidebar */
     border-radius: 10px;
     padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .chat-message {
     border-radius: 10px;
     padding: 10px;
     margin: 5px 0;
+    transition: background-color 0.3s ease; /* Fade effect on hover */
 }
 
 .user-message {
-    background-color: #d1b19a; 
+    background-color: #a4c8e1; /* Light blue for user messages */
     text-align: right;
     font-weight: bold;
 }
 
 .ai-message {
-    background-color: #e2c6a8; 
+    background-color: #d1e7f4; /* Lighter blue for AI messages */
     text-align: left;
     font-weight: bold;
 }
 
-/* New styles for the personalized learning path */
 .learning-path {
-    background-color: #e7f3fe; 
-    border: 1px solid #b3d7ff; 
+    background-color: #e7f3fe; /* Light blue for learning path */
+    border: 1px solid #b3d7ff; /* Border color */
     border-radius: 10px;
     padding: 15px;
     margin: 20px 0;
-    font-weight: bold; 
+    font-weight: bold;
+}
+
+/* Hover effects for chat messages */
+.chat-message:hover {
+    background-color: #cfe9f5; /* Slightly darker blue on hover */
 }
