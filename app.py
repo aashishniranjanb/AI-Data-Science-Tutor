@@ -10,6 +10,12 @@ GOOGLE_API_KEY = "AIzaSyBVOM4Pct30jaUcFUiXpbMy4hVOv2f3kKk"
 # Configure the Google Generative AI with the API key
 genai.configure(api_key=GOOGLE_API_KEY)
 
+# Style.css
+st.markdown(
+    '<link href="static/style.css" rel="stylesheet">',
+    unsafe_allow_html=True
+)
+
 # Set page title and logo
 st.set_page_config(
     page_title="Data Science Tutor",
