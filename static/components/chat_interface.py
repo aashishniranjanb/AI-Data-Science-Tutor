@@ -1,37 +1,23 @@
 import streamlit as st
 
 def display_chat_messages(messages):
-    
-    for idx, msg in enumerate(messages):
-        # Display user messages
-        if msg["role"] == "user":
-            with st.chat_message("user"):
-                st.markdown(f"**{msg['content']}**")
-        # Display AI (assistant) messages
+    for message in messages:
+        if message.sender == "user":
+            st.markdown(f"<div class='chat-message user-message'>{message.content}</div>", unsafe_allow_html=True)
         else:
-            with st.chat_message("assistant"):
-                st.markdown(msg["content"])
+            st.markdown(f"<div class='chat-message ai-message'>{message.content}</div>", unsafe_allow_html=True)
 
-def handle_chat_input(messages, llm_function):
-    
-    user_input = st.text_input(
-        "Ask a question about Data Science:",
-        placeholder="E.g., What is linear regression?",
-        key="chat_input"
-    )
-    
-    if user_input:
-        # Add user message to chat
-        messages.append({"role": "user", "content": user_input})
+def handle_chat_input(messages, llm_chain):
+    user_input = st.text_input("Ask your data science question:")
+    if st.button("Send"):
+        messages.append(Message(sender="user", content=user_input))
         
-        with st.spinner("Thinking..."):
-            response = llm_function(user_input)
+        # Custom responses for specific inputs
+        if user_input.lower() in ["hi", "hello"]:
+            response = "🔹 AI Tutor: Here’s an answer to '{}': Hello! How can I assist you today?".format(user_input)
+        elif user_input.lower() == "what is eda":
+            response = "🔹 AI Tutor: Here’s an answer to 'what is eda': EDA, or Exploratory Data Analysis, is a critical step in the data analysis process where you summarize the main characteristics of a dataset, often using visual methods."
+        else:
+            response = llm_chain.run(user_input)  # Fallback to LLM for other questions
         
-        # Add AI response to chat
-        messages.append({"role": "assistant", "content": response})
-        
-        # Update session state
-        st.session_state["messages"] = messages
-        
-        # Rerun to display the new messages
-        st.experimental_rerun()
+        messages.append(Message(sender="ai", content=response))
