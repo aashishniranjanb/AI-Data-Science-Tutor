@@ -14,7 +14,7 @@ genai.configure(api_key=GOOGLE_API_KEY)
 st.set_page_config(
     page_title="Data Science Tutor",
     page_icon="static/ai_tutor_icon.png" 
-
+)
 # Initialize session state and LLM chain
 initialize_session_state()
 
