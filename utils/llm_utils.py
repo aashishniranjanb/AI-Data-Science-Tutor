@@ -1,15 +1,12 @@
 import google.generativeai as genai
-import os
 
 def get_llm(prompt: str) -> str:
     """
     Sends the user's prompt to Google's Gemini 1.5 Pro 
     model and returns the AI-generated response.
     """
-    api_key = os.getenv("GOOGLE_API_KEY", "AIzaSyBVOM4Pct30jaUcFUiXpbMy4hVOv2f3kKk")
-    if not api_key:
-        return "⚠️ API key not found. Please set GOOGLE_API_KEY in your environment."
-    
+    # Use the global API key set in app.py
+    api_key = "AIzaSyBVOM4Pct30jaUcFUiXpbMy4hVOv2f3kKk" 
     genai.configure(api_key=api_key)
     
     model = genai.GenerativeModel("gemini-1.5-pro")
