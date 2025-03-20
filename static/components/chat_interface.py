@@ -1,4 +1,5 @@
 import streamlit as st
+from utils.data_classes import Message
 
 def display_chat_messages(messages):
     for message in messages:
@@ -12,12 +13,7 @@ def handle_chat_input(messages, llm_chain):
     if st.button("Send"):
         messages.append(Message(sender="user", content=user_input))
         
-        # Custom responses for specific inputs
-        if user_input.lower() in ["hi", "hello"]:
-            response = "🔹 AI Tutor: Here’s an answer to '{}': Hello! How can I assist you today?".format(user_input)
-        elif user_input.lower() == "what is eda":
-            response = "🔹 AI Tutor: Here’s an answer to 'what is eda': EDA, or Exploratory Data Analysis, is a critical step in the data analysis process where you summarize the main characteristics of a dataset, often using visual methods."
-        else:
-            response = llm_chain.run(user_input)  # Fallback to LLM for other questions
+        # Generate response using the LLM
+        response = llm_chain(user_input)
         
         messages.append(Message(sender="ai", content=response))
