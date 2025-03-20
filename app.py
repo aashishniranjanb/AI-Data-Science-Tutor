@@ -12,7 +12,7 @@ st.set_page_config(
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
-st.sidebar.image("ds_tutor_icon.png", width=100)
+st.sidebar.image("ai_tutor_icon.png", width=100)
 st.sidebar.title("🔍 Navigation")
 page_choice = st.sidebar.radio(
     "Select a page:", ["Chat", "Learning Path", "Quizzes", "Settings"]
