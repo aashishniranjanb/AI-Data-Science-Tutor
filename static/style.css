@@ -1,0 +1,39 @@
+body {
+    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+}
+
+h1 {
+    color: #333;
+}
+
+.sidebar .sidebar-content {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.chat-message {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.user-message {
+    background-color: #d1e7dd;
+    text-align: right;
+}
+
+.ai-message {
+    background-color: #f8d7da;
+    text-align: left;
+}
+
+/* New styles for the personalized learning path */
+.learning-path {
+    background-color: #e7f3fe;
+    border: 1px solid #b3d7ff;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px 0;
+}
